@@ -30,6 +30,7 @@ import android.widget.EditText;
 
 import com.ciscowebex.androidsdk.kitchensink.R;
 import com.ciscowebex.androidsdk.kitchensink.actions.commands.AppIdLoginAction;
+import com.ciscowebex.androidsdk.kitchensink.launcher.PerryActivity;
 import com.ciscowebex.androidsdk.kitchensink.ui.BaseFragment;
 import com.ciscowebex.androidsdk.kitchensink.launcher.LauncherActivity;
 import com.ciscowebex.androidsdk.kitchensink.actions.events.LoginEvent;
@@ -87,6 +88,6 @@ public class JwtFragment extends BaseFragment {
     }
 
     private void startLauncher() {
-        startActivity(new Intent(getActivity(), LauncherActivity.class));
+        startActivity(new Intent(getActivity(), PerryActivity.class));
     }
 }

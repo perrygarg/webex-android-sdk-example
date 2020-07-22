@@ -25,6 +25,7 @@ package com.ciscowebex.androidsdk.kitchensink.actions;
 
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
@@ -43,6 +44,7 @@ import com.ciscowebex.androidsdk.message.RemoteFile;
 import com.ciscowebex.androidsdk.phone.Call;
 import com.ciscowebex.androidsdk.phone.CallObserver;
 import com.ciscowebex.androidsdk.phone.MediaOption;
+import com.ciscowebex.androidsdk.phone.MediaRenderView;
 import com.ciscowebex.androidsdk.phone.Phone;
 import com.ciscowebex.androidsdk.space.SpaceClient;
 
@@ -206,7 +208,7 @@ public class WebexAgent {
         if (callCap.equals(CallCap.AUDIO_ONLY))
             return MediaOption.audioOnly();
         else
-            return MediaOption.audioVideoSharing(new Pair<>(localView, remoteView), screenSharing);
+            return MediaOption.audioVideoSharing(null, screenSharing);
     }
 
     public void reject() {
@@ -233,6 +235,18 @@ public class WebexAgent {
 
     public void setVideoRenderViews(@Nullable Pair<View, View> videoRenderViews){
         activeCall.setVideoRenderViews(videoRenderViews);
+    }
+
+    public void setRenderingViews(View localView, View remoteView) {
+        if(activeCall != null) {
+            activeCall.setFacingMode(Phone.FacingMode.USER);
+            if(remoteView != null && localView != null) {
+                Log.d("involvio", "Views added");
+                activeCall.setVideoRenderViews(new Pair<>(localView, remoteView));
+            } else {
+                activeCall.setVideoRenderViews(null);
+            }
+        }
     }
 
     public void startPreview(View view) {

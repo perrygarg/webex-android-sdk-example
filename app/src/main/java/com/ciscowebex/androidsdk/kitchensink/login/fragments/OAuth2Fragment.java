@@ -29,6 +29,7 @@ import android.webkit.WebView;
 
 import com.ciscowebex.androidsdk.kitchensink.R;
 import com.ciscowebex.androidsdk.kitchensink.actions.commands.WebexIdLoginAction;
+import com.ciscowebex.androidsdk.kitchensink.launcher.PerryActivity;
 import com.ciscowebex.androidsdk.kitchensink.ui.BaseFragment;
 import com.ciscowebex.androidsdk.kitchensink.launcher.LauncherActivity;
 import com.ciscowebex.androidsdk.kitchensink.actions.events.LoginEvent;
@@ -81,7 +82,7 @@ public class OAuth2Fragment extends BaseFragment {
     public void onEventMainThread(LoginEvent event) {
         if (event.isSuccessful()) {
             toast("OAuth2 logged in.");
-            startActivity(new Intent(getActivity(), LauncherActivity.class));
+            startActivity(new Intent(getActivity(), PerryActivity.class));
             getActivity().finish();
         } else {
             toast("OAuth2 logged failed.");

@@ -25,13 +25,17 @@ package com.ciscowebex.androidsdk.kitchensink.login;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.ciscowebex.androidsdk.kitchensink.KitchenSinkApp;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import com.ciscowebex.androidsdk.kitchensink.R;
 import com.ciscowebex.androidsdk.kitchensink.actions.commands.RequirePermissionAction;
+import com.ciscowebex.androidsdk.kitchensink.launcher.PerryActivity;
 import com.ciscowebex.androidsdk.kitchensink.login.fragments.JwtFragment;
 import com.ciscowebex.androidsdk.kitchensink.login.fragments.OAuth2Fragment;
 
@@ -53,6 +57,12 @@ public class LoginActivity extends Activity {
         }
         setContentView(R.layout.fragment_login);
         ButterKnife.bind(this);
+
+        if(KitchenSinkApp.getApplication().isWebexAuthorized()) {
+            Toast.makeText(this, "Already logged in", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, PerryActivity.class));
+            finish();
+        }
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -64,7 +74,7 @@ public class LoginActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        getFragmentManager().popBackStackImmediate();
+//        getFragmentManager().popBackStackImmediate();
     }
 
     @OnClick(R.id.buttonWebex)

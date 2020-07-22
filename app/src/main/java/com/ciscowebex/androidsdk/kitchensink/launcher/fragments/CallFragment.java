@@ -41,11 +41,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.util.Rational;
 import android.view.LayoutInflater;
@@ -60,6 +63,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ciscowebex.androidsdk.kitchensink.BuildConfig;
 import com.ciscowebex.androidsdk.kitchensink.R;
 import com.ciscowebex.androidsdk.kitchensink.actions.WebexAgent;
 import com.ciscowebex.androidsdk.kitchensink.actions.commands.AddCallHistoryAction;
@@ -549,10 +553,17 @@ public class CallFragment extends BaseFragment {
         snackbar.show();
     }
 
+    public static void log(@Nullable String message){
+        if(TextUtils.isEmpty(message))  message = "NULL";
+        if(BuildConfig.DEBUG) Log.d("WEBEX-CALLING-INVOLVIO", message);
+    }
+
     @SuppressWarnings("unused")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(OnConnectEvent event) {
+        log("OnConnectEvent");
         isConnected = true;
+        agent.setRenderingViews(localView, remoteView);
         startAwakeService();
         floatButton.setVisibility(View.VISIBLE);
         setViewAndChildrenEnabled(layout, true);

@@ -31,9 +31,13 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.ciscowebex.androidsdk.kitchensink.BuildConfig;
 import com.ciscowebex.androidsdk.kitchensink.R;
 import com.ciscowebex.androidsdk.kitchensink.actions.commands.RequirePermissionAction;
 import com.ciscowebex.androidsdk.kitchensink.actions.events.OnCallMembershipEvent;
@@ -67,6 +71,17 @@ public class LauncherActivity extends Activity {
         EventBus.getDefault().unregister(this);
     }
 
+    public static void log(@Nullable String message){
+        if(TextUtils.isEmpty(message))  message = "NULL";
+        if(BuildConfig.DEBUG) Log.d("WEBEX-CALLING-INVOLVIO", message);
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        log("onUserLeaveHint");
+        super.onUserLeaveHint();
+    }
+
     @Override
     public void onBackPressed() {
         goBackStack();
@@ -81,7 +96,7 @@ public class LauncherActivity extends Activity {
             super.onBackPressed();
         } else {
             //manager.popBackStackImmediate();
-            startActivity(new Intent(this, LauncherActivity.class));
+            startActivity(new Intent(this, PerryActivity.class));
             finish();
         }
     }

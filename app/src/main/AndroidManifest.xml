@@ -37,22 +37,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".launcher.PerryActivity"></activity>
         <activity
-            android:name="com.ciscowebex.androidsdk.kitchensink.login.LoginActivity"
+            android:name=".login.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.ciscowebex.androidsdk.kitchensink.launcher.LauncherActivity"
-            android:screenOrientation="unspecified"
+            android:name=".launcher.LauncherActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
+            android:resizeableActivity="true"
+            android:screenOrientation="unspecified"
             android:supportsPictureInPicture="true"
-            android:resizeableActivity="true"/>
+
+            />
 
         <service android:name=".service.AwakeService" />
         <service android:name=".service.FloatWindowService" />

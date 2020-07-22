@@ -25,6 +25,9 @@ package com.ciscowebex.androidsdk.kitchensink;
 
 import android.app.Application;
 
+import com.ciscowebex.androidsdk.auth.OAuthWebViewAuthenticator;
+import com.ciscowebex.androidsdk.kitchensink.actions.WebexAgent;
+import com.ciscowebex.androidsdk.kitchensink.actions.commands.WebexIdLoginAction;
 import com.ciscowebex.androidsdk.kitchensink.models.DaoMaster;
 import com.ciscowebex.androidsdk.kitchensink.models.DaoSession;
 
@@ -38,6 +41,7 @@ public class KitchenSinkApp extends Application {
 
     private static KitchenSinkApp application;
     private static DaoSession daoSession;
+    private boolean isWebexAuthorizedd = false;
 
     @Override
     public void onCreate() {
@@ -46,6 +50,14 @@ public class KitchenSinkApp extends Application {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "call-history-db");
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
+
+        OAuthWebViewAuthenticator oAuth2 = WebexIdLoginAction.initWebexAuthenticator();
+        if(oAuth2.isAuthorized()) {
+            setWebexAuthorized(true);
+            WebexAgent.getInstance().register();
+        } else {
+            setWebexAuthorized(false);
+        }
     }
 
     public static KitchenSinkApp getApplication() {
@@ -55,4 +67,13 @@ public class KitchenSinkApp extends Application {
     public static DaoSession getDaoSession() {
         return daoSession;
     }
+
+    public boolean isWebexAuthorized() {
+        return isWebexAuthorizedd;
+    }
+
+    public void setWebexAuthorized(boolean webexAuthorized) {
+        isWebexAuthorizedd = webexAuthorized;
+    }
+
 }
